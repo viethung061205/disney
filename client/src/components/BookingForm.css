@@ -1,0 +1,130 @@
+.home {
+  background-color: #142965;
+  padding: 5px;
+}
+
+.form-wrapper {
+  font-family: Libre Baskerville;
+  background: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.form-header h2 {
+  margin-bottom: 5px;
+  font-size: 30px;
+}
+
+.form-header p {
+  font-size: 20px;
+  color: #737373;
+  font-weight: bold;
+}
+
+.form-body {
+  background: #e7e4e4;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.form-body h3 {
+  border-bottom: 2px solid #737373;
+  padding-bottom: 5px;
+  font-size: 23px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #737373;
+  font-size: 18px;
+}
+
+label span {
+  color: red;
+}
+
+select:focus {
+  outline: 2px solid black;
+}
+
+select:valid {
+  background: white;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid #b4b4b4;
+  border-radius: 8px;
+}
+
+input:focus::placeholder,
+textarea:focus::placeholder,
+select:focus::placeholder {
+  color: transparent;
+}
+
+textarea {
+  resize:unset;
+  height: 71px;
+}
+
+.summary-box {
+  background: #79c5f4;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.summary-box p{
+  font-weight: bold;
+  font-size: 17px;
+  color: black;
+}
+
+.btn-containers{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.continue-btn {
+  background: #f7f616;
+  border: none;
+  padding: 10px 25px;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 26px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: Libre Baskerville;
+}
+
+.continue-btn:hover {
+  background: #e7c84f;
+}
+
+.back-btn {
+  background: rgb(237, 47, 47);
+  border: none;
+  padding: 10px 35px;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 26px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: Libre Baskerville;
+}
+
+.back-btn:hover {
+  background: #c51616;
+}

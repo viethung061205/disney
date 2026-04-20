@@ -1,0 +1,656 @@
+/* AdminLogin.css */
+.admin-login-page {
+  background-image: url("https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_3000,h_1682/activities/q98c5texsxp7rhbr0mxx/V%C3%A9ShanghaiDisneyland%E1%BB%9FTh%C6%B0%E1%BB%A3ngH%E1%BA%A3i-KlookVi%E1%BB%87tNam.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-login-box {
+  background-color: white;
+  padding: 20px 15px;
+  border-radius: 12px;
+  width: 500px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.admin-login-box h2 {
+  font-size: 35px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.admin-subtitle {
+  font-size: 20px;
+  color: black;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.admin-login-btn {
+  display: block;
+  margin: 12px auto;
+  padding: 12px;
+  background: #768dda;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  font-size: 20px;
+  transition: 0.2s;
+  font-family: inherit;
+}
+
+.admin-login-btn:hover {
+  background: #4d6bcb;
+  transform: scale(1.03);
+}
+
+#reader {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.admin-error {
+  color: #ff3b3b;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.back-user-btn {
+  background: none;
+  border: none;
+  color: black;
+  font-weight: 500;
+  font-size: 18px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: 5px;
+  transition: 0.1s;
+}
+
+.back-user-btn:hover{
+  transform: scale(1.03);
+  font-weight: bold;
+}
+
+
+
+/*AdminLayout.css*/
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: Libre Baskerville;
+}
+
+/* SIDEBAR */
+.admin-sidebar {
+  background: #1f3eaa;
+  color: white;
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.admin-sidebar.open {
+  width: 300px;
+}
+
+.admin-sidebar.close {
+  width: 60px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #5170ff;
+  transition: 0.3s;
+}
+
+.sidebar-header .logo-text {
+  font-size: 25px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.admin-sidebar.close .sidebar-header .logo-text {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* MENU BUTTON */
+.menu-btn {
+  cursor: pointer;
+  font-size: 25px;
+  margin-right: 18px;
+  margin-left: 3px;
+}
+
+/* MENU LIST */
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+}
+
+.sidebar-menu li {
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  font-size: 18px;
+}
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  transition: background 0.1s ease;
+}
+
+.sidebar-menu li:hover {
+  background: #768dda;
+  font-weight: bold;
+}
+
+/* MENU ICON STYLE */
+.menu-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  margin-right: 15px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.sidebar-menu li:first-child .menu-icon {
+  transform: scale(1.8);
+}
+
+.admin-sidebar.close .sidebar-menu li span {
+  display: none;
+}
+
+/* MAIN */
+.admin-main {
+  flex: 1;
+  background-color: white;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+.admin-header {
+  height: 65px;
+  background: #768dda;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.admin-user {
+  display: flex;
+  gap: 20px; 
+  align-items: center;
+  margin-right: 15px;
+}
+
+.admin-icon-1 {
+  width: 45px;
+  height: 45px;
+  object-fit: fill;
+  cursor: pointer;
+  border-radius: 50px;
+  border: none;
+  background-color: #1f3eaa;
+}
+
+.admin-icon-1 img{
+  width: 35px;
+  height: 35px;
+}
+
+.admin-icon-2 {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+
+
+/*UserManagement.css*/
+.user-management{
+  padding: 10px 15px 15px;
+  background:white;
+  min-height: 100vh;
+}
+
+.user-management h2{
+  font-size: 35px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* FORM */
+.user-form{
+  background: #768edb;
+  padding: 0px 10px 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 0px;
+  column-gap: 30px;
+}
+
+.input-group{
+  display:flex;
+  flex-direction:column;
+  margin-bottom: 10px;
+}
+
+.input-group label{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:5px;
+  color:white;
+}
+
+.input-group input,
+.input-group select{
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 600;
+  padding: 12px 15px;
+  border-radius:50px;
+  border:1px solid gray;
+  font-size:18px;
+  transition:0.1s;
+}
+
+.input-group input:nth-child(6){
+  margin-bottom: 10px;
+}
+
+.input-group input:focus,
+.input-group select:focus{
+  outline:none;
+  border-color:black;
+  box-shadow:0 0 0 2px rgba(118,141,218,0.2);
+}
+
+/* TABLE */
+.user-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 3px 15px rgba(0, 0, 0, 0.184);
+}
+
+.user-table thead{
+  background:#506dcc;
+  color:white;
+}
+
+.user-table th {
+  font-size: 16px;
+  text-align: center;
+  padding:10px 15px;
+}
+
+.user-table td{
+  padding:10px 15px;
+  text-align:center;
+  font-size:14px;
+}
+
+.user-table td:nth-child(3){
+  width:170px;
+}
+
+.user-table tbody tr{
+  border-bottom:1px solid #cfcbcb;
+}
+
+.user-table tbody tr:hover{
+  background:#f4f2f2;
+}
+
+.user-table img{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* ACTION BUTTONS */
+.edit-btn{
+  background:#00bf63;
+  color:white;
+  border:none;
+  padding:8px 10px;
+  border-radius:50px;
+  width: 100%;
+  cursor:pointer;
+  font-size:17px;
+  transition:0.1s;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.edit-btn:hover{
+  background:#3e8e41;
+  transform:scale(1.03);
+}
+
+.delete-btn{
+  background:#ff3131;
+  color:white;
+  border:none;
+  padding:8px 13px;
+  border-radius:50px;
+  cursor:pointer;
+  font-size:17px;
+  transition:0.1s;
+  font-weight: 600;
+}
+
+.delete-btn:hover{
+  background:#d32f2f;
+  transform:scale(1.03);
+}
+
+
+
+/*BookingManagement.css*/
+.booking-manage{
+  padding:10px 15px;
+  background:white;
+}
+
+/* ===== TAB ===== */
+
+.admin-tabs{
+  display:flex;
+  gap:15px;
+  margin-bottom:10px;
+}
+
+.tab{
+  padding:10px 22px;
+  border:none;
+  border-radius:50px;
+  background:#dbe0fa;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:20px;
+  transition:0.1s;
+}
+
+.tab:hover{
+  background:#c0caf9;
+}
+
+.tab.active{
+  background:#506dcc;
+  color:white;
+}
+
+/* ===== BOX ===== */
+
+.box{
+  background:#768edb;
+  padding:10px;
+  border-radius:12px;
+  margin-bottom:5px;
+}
+
+.box h3{
+  margin-bottom:10px;
+  font-size:25px;
+  font-weight:bold;
+  color:white;
+}
+
+/* ===== FORM ===== */
+
+.ticket-form{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:30px;
+  margin-bottom:18px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.ticket-form input,
+.ticket-form select,
+.ticket-form textarea{
+  padding:12px 15px;
+  border-radius:50px;
+  border:1px solid gray;
+  font-size:18px;
+  font-family:inherit;
+  font-weight: 600;
+}
+
+.ticket-form textarea{
+  grid-column:span 1;
+  height: 71px;
+  resize: none;
+  border-radius:10px;
+}
+
+.ticket-form input:focus,
+.ticket-form select:focus,
+.ticket-form textarea:focus{
+  outline:none;
+  border-color:black;
+  box-shadow:0 0 0 2px rgba(118,141,218,0.2);
+}
+
+/* ===== FORM BUTTONS ===== */
+
+.form-btns{
+  grid-column:span 2;
+  display:flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 5px;
+}
+
+.btn-save,
+.btn-cancel{
+  width: 49%;
+  padding: 12px 15px;
+  border:none;
+  border-radius:50px;
+  color:white;
+  cursor:pointer;
+  font-size: 23px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  transition: 0.1s;
+}
+
+.btn-save{
+  background:#00bf63;
+}
+
+.btn-save:hover{
+  background:#009e52;
+  transform: translateY(-10px);
+}
+
+.btn-cancel{
+  background:#ff3131;
+}
+
+.btn-cancel:hover{
+  background:#d42020;
+  transform: translateY(-10px);
+}
+
+/* ===== TABLE ===== */
+
+.table-responsive{
+  overflow-x:auto;
+  width: 100%;
+}
+
+.admin-table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 3px 12px rgba(0,0,0,0.15);
+}
+
+/* HEADER */
+
+.admin-table thead{
+  background:#506dcc;
+  color:white;
+}
+
+.admin-table th{
+  padding:10px 12px;
+  font-size:18px;
+  text-align:center;
+}
+
+/* BODY */
+
+.admin-table td{
+  padding:10px;
+  font-size:16px;
+  text-align:center;
+  border-bottom:1px solid #cfcbcb;
+  transition: 0.1s;
+}
+
+.admin-table tbody tr:hover{
+  background:#f4f2f2;
+}
+
+.admin-table thead th:nth-child(3){
+  min-width:150px;
+}
+
+.admin-table thead th:nth-child(8){
+  min-width:160px;
+}
+
+.admin-table thead th:nth-child(12){
+  min-width:150px;
+}
+
+/* DESCRIPTION COLUMN */
+
+.description{
+  max-width:270px;
+  word-break:break-word;
+}
+
+/* ===== ACTION BUTTON ===== */
+
+.btn-edit, .btn-delete{
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  transition: 0.1s;
+}
+
+.btn-edit{
+  background:#00bf63;
+  margin-right: 5px;
+}
+
+.btn-edit:hover{
+  background:#009e52;
+  transform: scale(1.03);
+}
+
+.btn-delete{
+  background:#ff3131;
+}
+
+.btn-delete:hover{
+  background:#d42020;
+  transform: scale(1.03);
+}
+
+.user-actions{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+
+
+/*ShopManagement.css*/
+.shop-manage{
+  padding:10px 15px;
+  background:white;
+}
+
+.admin-title {
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+.shop-manage .ticket-form{
+  background:#768edb;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:20px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.shop-manage .ticket-form input:last-of-type{
+  height: 71px;
+  resize: none;;
+}
+
+.shop-manage .admin-table-wrapper{
+  overflow-x:auto;
+}
+
+.btn-add{
+  background:#506dcc;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:50px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-add:hover{
+  background:#3954a3;
+}
