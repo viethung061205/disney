@@ -36,13 +36,6 @@ const AdminLayout = () => {
               {openMenu && <span>Shopping management</span>}
             </Link>
           </li>
-
-          <li className={location.pathname === "/admin/chatbot" ? "active" : ""}>
-            <Link to="/admin/chatbot">
-              <img className="menu-icon" src="https://iot-analytics.com/wp-content/uploads/2025/02/AI-White-Icon.png" alt="chatbot" />
-              {openMenu && <span>AI Chatbot Center</span>}
-            </Link>
-          </li>
         </ul>
       </div>
 

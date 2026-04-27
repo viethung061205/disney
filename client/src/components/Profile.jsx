@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react"; 
 import { useNavigate } from "react-router-dom";
+import { QRCodeCanvas } from "qrcode.react"; 
+import html2canvas from "html2canvas"; 
 import "./Profile.css";
 
 export default function Profile() {
@@ -21,6 +23,7 @@ export default function Profile() {
   const [tickets, setTickets] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [orders, setOrders] = useState([]);
+  const ticketRefs = useRef({});
 
   const fetchUserTickets = async () => {
     if (!userData?.email) return;
@@ -353,127 +356,184 @@ export default function Profile() {
         )}
 
         {activeTab === "ticket" && (
-          <>
-            <div className="profile-tabs sub-tabs">
-              <button
-                className={ticketTab === "available" ? "tab active" : "tab"}
-                onClick={() => setTicketTab("available")}
+  <>
+    <div className="profile-tabs sub-tabs">
+      <button
+        className={ticketTab === "available" ? "tab active" : "tab"}
+        onClick={() => setTicketTab("available")}
+      >
+        Available Tickets
+      </button>
+      <button
+        className={ticketTab === "unavailable" ? "tab active" : "tab"}
+        onClick={() => setTicketTab("unavailable")}
+      >
+        History
+      </button>
+    </div>
+
+    <div className="ticket-container">
+      <div className="ticket-grid">
+        {(() => {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+
+          const filteredTickets = tickets.filter((t) => {
+            const usageDate = new Date(t.ngay_sudung);
+            usageDate.setHours(0, 0, 0, 0);
+
+            const expiredDays =
+              (today - usageDate) / (1000 * 60 * 60 * 24);
+
+            if (expiredDays > 30) return false;
+
+            const isAvailable =
+              t.trang_thai === "Success" && usageDate >= today;
+
+            return ticketTab === "available"
+              ? isAvailable
+              : !isAvailable;
+          });
+
+          if (filteredTickets.length === 0) {
+            return (
+              <p className="no-data-msg">
+                No tickets found in this category.
+              </p>
+            );
+          }
+
+          return filteredTickets.map((ticket, index) => {
+            const usageDate = new Date(ticket.ngay_sudung);
+            usageDate.setHours(0, 0, 0, 0);
+
+            const isExpired =
+              usageDate < today && ticket.trang_thai === "Success";
+
+            const qrValue = `
+Transaction Ref: ${ticket.txn_ref}
+Full Name: ${ticket.hoten}
+Email: ${ticket.email}
+Phone: ${ticket.sdt}
+Address: ${ticket.diachi}
+Location: ${ticket.diadiem}
+Ticket Type: ${ticket.loai_ve}
+Quantity: ${ticket.soluong_ve} tickets
+Meals: ${ticket.soluong_suatan}
+Usage Date: ${usageDate.toLocaleDateString()}
+Total Amount: ${Number(ticket.tong_tien).toLocaleString()} VND
+Bank Code: ${ticket.ma_ngan_hang}
+Status: ${isExpired ? "Expired" : ticket.trang_thai}
+VNPAY Transaction ID: ${ticket.ma_gd_vnpay}
+Created At: ${new Date(ticket.ngay_tao).toLocaleString()}
+`.trim();
+
+            const ticketKey = ticket.txn_ref || index;
+
+            return (
+              <div
+                key={ticketKey}
+                ref={(el) => {
+                  if (ticketKey) ticketRefs.current[ticketKey] = el;
+                }}
+                className={`ticket-item-card ${ticket.trang_thai.toLowerCase()} ${
+                  isExpired ? "expired-style" : ""
+                }`}
               >
-                Available Tickets
-              </button>
-              <button
-                className={ticketTab === "unavailable" ? "tab active" : "tab"}
-                onClick={() => setTicketTab("unavailable")}
-              >
-                History
-              </button>
-            </div>
+                <div className="ticket-header">
+                  <h3>{ticket.loai_ve}</h3>
+                  <span className="status-label">
+                    {isExpired ? "Expired" : ticket.trang_thai}
+                  </span>
+                </div>
 
-            <div className="ticket-container">
-              <div className="ticket-grid">
-                {(() => {
-                  const today = new Date();
-                  today.setHours(0, 0, 0, 0);
+                <div
+                  className="ticket-body"
+                  style={{ display: "flex", gap: "20px" }}
+                >
+                  <div style={{ flex: 1 }}>
+                    <p><b>Full Name:</b> {ticket.hoten}</p>
+                    <p><b>Email:</b> {ticket.email}</p>
+                    <p><b>Phone:</b> {ticket.sdt}</p>
+                    <p><b>Address:</b> {ticket.diachi}</p>
 
-                  const filteredTickets = tickets.filter((t) => {
-                    const usageDate = new Date(t.ngay_sudung);
-                    usageDate.setHours(0, 0, 0, 0);
+                    <hr />
 
-                    const expiredDays =
-                      (today - usageDate) / (1000 * 60 * 60 * 24);
+                    <p><b>Transaction Ref:</b> {ticket.txn_ref}</p>
+                    <p><b>VNPAY ID:</b> {ticket.ma_gd_vnpay}</p>
+                    <p><b>Bank:</b> {ticket.ma_ngan_hang}</p>
+                    <p><b>Location:</b> {ticket.diadiem}</p>
+                    <p><b>Usage Date:</b> {usageDate.toLocaleDateString()}</p>
+                    <p><b>Quantity:</b> {ticket.soluong_ve} tickets | {ticket.soluong_suatan} meals</p>
 
-                    if (expiredDays > 30) return false;
+                    <hr />
 
-                    const isAvailable =
-                      t.trang_thai === "Success" && usageDate >= today;
+                    <p className="total-price">
+                      <b>Total:</b> {Number(ticket.tong_tien).toLocaleString()} VND
+                    </p>
+                  </div>
 
-                    return ticketTab === "available"
-                      ? isAvailable
-                      : !isAvailable;
-                  });
+                  <div style={{ textAlign: "center" }}>
+                    <QRCodeCanvas
+                      value={qrValue}
+                      size={500}          
+                      level="H"
+                      includeMargin={true}  
+                      style={{
+                        imageRendering: "pixelated",
+                      }}
+                    />
+                    <p className="scan-text">Scan to check-in</p>
+                  </div>
+                </div>
 
-                  if (filteredTickets.length === 0) {
-                    return (
-                      <p className="no-data-msg">
-                        No tickets found in this category.
-                      </p>
-                    );
-                  }
+                <div style={{ marginTop: "10px" }}>
+                  <button
+                    className="download-btn"
+                    onClick={async () => {
+                      const element = ticketRefs.current[ticketKey];
+                      if (!element) {
+                        alert("Download failed: ticket not found");
+                        return;
+                      }
 
-                  return filteredTickets.map((ticket, index) => {
-                    const usageDate = new Date(ticket.ngay_sudung);
-                    usageDate.setHours(0, 0, 0, 0);
+                      try {
+                        const downloadBtn = element.querySelector('.download-btn');
+                        if (downloadBtn) downloadBtn.style.visibility = 'hidden';
 
-                    const isExpired =
-                      usageDate < today && ticket.trang_thai === "Success";
+                        const canvas = await html2canvas(element, {
+                          useCORS: true,
+                          scale: 5, 
+                          backgroundColor: "#ffffff",
+                        });
 
-                    return (
-                      <div
-                        key={index}
-                        className={`ticket-item-card ${ticket.trang_thai.toLowerCase()} ${
-                          isExpired ? "expired-style" : ""
-                        }`}
-                      >
-                        <div className="ticket-header">
-                          <h3>{ticket.loai_ve}</h3>
-                          <span className="status-label">
-                            {isExpired ? "Expired" : ticket.trang_thai}
-                          </span>
-                        </div>
+                        if (downloadBtn) downloadBtn.style.visibility = 'visible';
 
-                        <div className="ticket-body">
-                          <p>
-                            <b>Full Name:</b> {ticket.hoten}
-                          </p>
-                          <p>
-                            <b>Email:</b> {ticket.email}
-                          </p>
-                          <p>
-                            <b>Phone:</b> {ticket.sdt}
-                          </p>
-                          <p>
-                            <b>Address:</b> {ticket.diachi}
-                          </p>
+                        const image = canvas.toDataURL("image/png", 1.0);
 
-                          <hr />
-
-                          <p>
-                            <b>Transaction Ref:</b> {ticket.txn_ref}
-                          </p>
-                          <p>
-                            <b>VNPAY Transaction ID:</b> {ticket.ma_gd_vnpay}
-                          </p>
-                          <p>
-                            <b>Bank Code:</b> {ticket.ma_ngan_hang}
-                          </p>
-                          <p>
-                            <b>Location:</b> {ticket.diadiem}
-                          </p>
-                          <p>
-                            <b>Usage Date:</b>{" "}
-                            {usageDate.toLocaleDateString()}
-                          </p>
-                          <p>
-                            <b>Quantity:</b> {ticket.soluong_ve} tickets |{" "}
-                            {ticket.soluong_suatan} meals
-                          </p>
-
-                          <hr />
-
-                          <p className="total-price">
-                            <b>Total Amount:</b>{" "}
-                            {Number(ticket.tong_tien).toLocaleString()} VND
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  });
-                })()}
+                        const link = document.createElement("a");
+                        link.href = image;
+                        link.download = `ticket-${ticketKey}.png`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      } catch (err) {
+                        console.error(err);
+                        alert("Download failed");
+                      }
+                    }}
+                  >
+                    Download Ticket
+                  </button>
+                </div>
               </div>
-            </div>
-          </>
-        )}
-
+            );
+          });
+        })()}
+      </div>
+    </div>
+  </>
+)}
         {activeTab === "shop" && (
           <>
             <div className="profile-tabs sub-tabs">

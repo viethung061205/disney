@@ -360,30 +360,6 @@
   margin: 0;
 }
 
-/* ===== STATUS LABEL ===== */
-.status-label {
-  padding: 6px 18px;
-  font-size: 18px;
-  border-radius: 30px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.ticket-item-card.success .status-label {
-  background: #eafaf1;
-  color: #2ecc71;
-}
-
-.ticket-item-card.pending .status-label {
-  background: #fff8e1;
-  color: #f1c40f;
-}
-
-.ticket-item-card.failed .status-label {
-  background: #fdecea;
-  color: #e74c3c;
-}
-
 /* ===== BODY ===== */
 .ticket-body {
   font-size: 22px;
@@ -705,4 +681,89 @@
   .order-body {
     grid-template-columns: 1fr;
   }
+}
+
+/* ===== SUCCESS ===== */
+.ticket-item-card.success .status-label {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: #fff;
+  font-size: 26px;
+  padding: 10px 30px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  box-shadow: 0 6px 14px rgba(46, 204, 113, 0.4);
+  border-radius: 12px;
+}
+
+
+/* ===== PENDING ===== */
+.ticket-item-card.pending .status-label {
+  background: linear-gradient(135deg, #f1c40f, #d4ac0d);
+  color: #fff;
+  font-size: 26px;
+  padding: 8px 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  box-shadow: 0 6px 14px rgba(241, 196, 15, 0.4);
+}
+
+
+/* ===== FAILED ===== */
+.ticket-item-card.failed .status-label {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: #fff;
+  font-size: 26px;
+  padding: 8px 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  box-shadow: 0 6px 14px rgba(231, 76, 60, 0.4);
+}
+
+
+/* ===== EXPIRED ===== */
+.ticket-item-card.expired-style .status-label {
+  background: linear-gradient(135deg, #bdc3c7, #7f8c8d);
+  color: #fff;
+  font-size: 26px;
+  padding: 8px 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  box-shadow: 0 6px 14px rgba(127, 140, 141, 0.4);
+}
+
+.ticket-body > div:last-child canvas {
+  width: 170px !important;
+  height: 170px !important;
+}
+
+.scan-text {
+  font-size: 20px;        
+  font-weight: 800;
+  color: #333;           
+  letter-spacing: 1px;
+  text-align: center;
+  margin-top: -18px;
+}
+
+.download-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  background: #333;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: -10px;
+}
+
+.download-btn:hover {
+  background: black;
+  transform: scale(1.02);
+}
+
+.download-btn::after {
+  content: " ⬇";
 }

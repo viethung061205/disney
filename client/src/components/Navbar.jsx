@@ -57,7 +57,7 @@ export default function Navbar() {
       </div>
 
       <ul className="navbar-links">
-        {/* Ẩn hoàn toàn menu User nếu là Admin */}
+        {/* User menu */}
         {navAuth.role !== "admin" && (
           <>
             <li><Link to="/about">About us</Link></li>
@@ -65,21 +65,27 @@ export default function Navbar() {
             <li><Link to="/shop">Shop</Link></li>
           </>
         )}
-        
-        <li className="separator" />
 
+        {/* separator chỉ hiện khi KHÔNG phải admin */}
+        {navAuth.role !== "admin" && <li className="separator" />}
+
+        {/* auth */}
         <li className="auth-group">
-          <Link to={navAuth.link}>{navAuth.label}</Link>
-          
-          {/* CHỈ HIỆN NÚT LOGOUT NẾU LÀ ADMIN */}
+          <Link to={navAuth.link} className="auth-link">
+            {navAuth.label}
+          </Link>
+
           {navAuth.role === "admin" && (
-            <button 
-              onClick={handleLogout} 
-              className="logout-nav-btn"
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            >
-              Logout
-            </button>
+            <>
+              <span className="auth-divider">|</span>
+
+              <button
+                onClick={handleLogout}
+                className="auth-link logout-btn"
+              >
+                Logout
+              </button>
+            </>
           )}
         </li>
       </ul>
