@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react"; 
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { QRCodeCanvas } from "qrcode.react"; 
-import html2canvas from "html2canvas"; 
+import { QRCodeCanvas } from "qrcode.react";
+import html2canvas from "html2canvas";
 import "./Profile.css";
 
 export default function Profile() {
@@ -17,7 +17,6 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState("account");
   const [ticketTab, setTicketTab] = useState("available");
   const [shopTab, setShopTab] = useState("cart");
-
   const [orderStatusTab, setOrderStatusTab] = useState("To Confirm");
 
   const [tickets, setTickets] = useState([]);
@@ -65,14 +64,11 @@ export default function Profile() {
 
   const fetchUserOrders = async () => {
     if (!userData?.email) return;
-
     try {
       const response = await fetch(
         `http://localhost:3000/api/shop/laydonhang/${userData.email}`
       );
-
       const data = await response.json();
-
       if (response.ok) {
         setOrders(data);
       } else {
@@ -85,13 +81,11 @@ export default function Profile() {
 
   const handleDeleteCartItem = async (cartId) => {
     if (!window.confirm("Are you sure you want to remove this item?")) return;
-
     try {
       const response = await fetch(
         `http://localhost:3000/api/shop/xoagiohang/${cartId}`,
         { method: "DELETE" }
       );
-
       if (response.ok) {
         setCartItems(cartItems.filter((item) => item.cart_id !== cartId));
         alert("Item removed successfully!");
@@ -105,19 +99,15 @@ export default function Profile() {
 
   const handleCancelOrder = async (orderId) => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
-
     try {
       const response = await fetch(
         `http://localhost:3000/api/shop/huydonhang/${orderId}`,
         { method: "DELETE" }
       );
-
       if (response.ok) {
         setOrders(
           orders.map((order) =>
-            order.id === orderId
-              ? { ...order, trangthai: "Cancelled" }
-              : order
+            order.id === orderId ? { ...order, trangthai: "Cancelled" } : order
           )
         );
         alert("Order canceled successfully!");
@@ -160,15 +150,11 @@ export default function Profile() {
 
   const updateProfileAPI = async (updatedUser) => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/user/thongtincanhan",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedUser),
-        }
-      );
-
+      const response = await fetch("http://localhost:3000/api/user/thongtincanhan", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
       const data = await response.json();
       if (response.ok) {
         setUserData(data.user);
@@ -187,7 +173,6 @@ export default function Profile() {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64Image = reader.result;
@@ -231,10 +216,7 @@ export default function Profile() {
           <>
             <div className="profile-avatar">
               <img
-                src={
-                  avatar ||
-                  "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                }
+                src={avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
                 alt="Avatar"
               />
               <label className="upload-btn">
@@ -305,47 +287,28 @@ export default function Profile() {
                     <button className="save-btn" onClick={handleSaveInfo}>
                       Save Changes
                     </button>
-                    <button
-                      className="cancel-btn"
-                      onClick={() => setIsEditing(false)}
-                    >
+                    <button className="cancel-btn" onClick={() => setIsEditing(false)}>
                       Cancel
                     </button>
                   </div>
                 </>
               ) : (
                 <>
-                  <p>
-                    <span>Full Name:</span> {userData.hoten}
-                  </p>
-                  <p>
-                    <span>Email:</span> {userData.email}
-                  </p>
-                  <p>
-                    <span>Phone:</span> {userData.sdt}
-                  </p>
-                  <p>
-                    <span>Address:</span> {userData.diachi}
-                  </p>
-                  <p>
-                    <span>Gender:</span> {userData.gioitinh}
-                  </p>
+                  <p><span>Full Name:</span> {userData.hoten}</p>
+                  <p><span>Email:</span> {userData.email}</p>
+                  <p><span>Phone:</span> {userData.sdt}</p>
+                  <p><span>Address:</span> {userData.diachi}</p>
+                  <p><span>Gender:</span> {userData.gioitinh}</p>
                   <p>
                     <span>Birthday:</span>{" "}
                     {new Date(userData.ngaysinh).toLocaleDateString()}
                   </p>
 
                   <div className="profile-actions">
-                    <button
-                      className="edit-btns"
-                      onClick={() => setIsEditing(true)}
-                    >
+                    <button className="edit-btns" onClick={() => setIsEditing(true)}>
                       Edit Profile
                     </button>
-                    <button
-                      className="logout-btn-profile"
-                      onClick={handleLogout}
-                    >
+                    <button className="logout-btn-profile" onClick={handleLogout}>
                       Logout
                     </button>
                   </div>
@@ -356,61 +319,52 @@ export default function Profile() {
         )}
 
         {activeTab === "ticket" && (
-  <>
-    <div className="profile-tabs sub-tabs">
-      <button
-        className={ticketTab === "available" ? "tab active" : "tab"}
-        onClick={() => setTicketTab("available")}
-      >
-        Available Tickets
-      </button>
-      <button
-        className={ticketTab === "unavailable" ? "tab active" : "tab"}
-        onClick={() => setTicketTab("unavailable")}
-      >
-        History
-      </button>
-    </div>
+          <>
+            <div className="profile-tabs sub-tabs">
+              <button
+                className={ticketTab === "available" ? "tab active" : "tab"}
+                onClick={() => setTicketTab("available")}
+              >
+                Available Tickets
+              </button>
+              <button
+                className={ticketTab === "unavailable" ? "tab active" : "tab"}
+                onClick={() => setTicketTab("unavailable")}
+              >
+                History
+              </button>
+            </div>
 
-    <div className="ticket-container">
-      <div className="ticket-grid">
-        {(() => {
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
+            <div className="ticket-container">
+              <div className="ticket-grid">
+                {(() => {
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
 
-          const filteredTickets = tickets.filter((t) => {
-            const usageDate = new Date(t.ngay_sudung);
-            usageDate.setHours(0, 0, 0, 0);
+                  const filteredTickets = tickets.filter((t) => {
+                    const usageDate = new Date(t.ngay_sudung);
+                    usageDate.setHours(0, 0, 0, 0);
 
-            const expiredDays =
-              (today - usageDate) / (1000 * 60 * 60 * 24);
+                    const expiredDays = (today - usageDate) / (1000 * 60 * 60 * 24);
+                    if (expiredDays > 30) return false;
 
-            if (expiredDays > 30) return false;
+                    const isAvailable = t.trang_thai === "Success" && usageDate >= today;
+                    return ticketTab === "available" ? isAvailable : !isAvailable;
+                  });
 
-            const isAvailable =
-              t.trang_thai === "Success" && usageDate >= today;
+                  if (filteredTickets.length === 0) {
+                    return (
+                      <p className="no-data-msg">No tickets found in this category.</p>
+                    );
+                  }
 
-            return ticketTab === "available"
-              ? isAvailable
-              : !isAvailable;
-          });
+                  return filteredTickets.map((ticket, index) => {
+                    const usageDate = new Date(ticket.ngay_sudung);
+                    usageDate.setHours(0, 0, 0, 0);
 
-          if (filteredTickets.length === 0) {
-            return (
-              <p className="no-data-msg">
-                No tickets found in this category.
-              </p>
-            );
-          }
+                    const isExpired = usageDate < today && ticket.trang_thai === "Success";
 
-          return filteredTickets.map((ticket, index) => {
-            const usageDate = new Date(ticket.ngay_sudung);
-            usageDate.setHours(0, 0, 0, 0);
-
-            const isExpired =
-              usageDate < today && ticket.trang_thai === "Success";
-
-            const qrValue = `
+                    const qrValue = `
 Transaction Ref: ${ticket.txn_ref}
 Full Name: ${ticket.hoten}
 Email: ${ticket.email}
@@ -428,112 +382,116 @@ VNPAY Transaction ID: ${ticket.ma_gd_vnpay}
 Created At: ${new Date(ticket.ngay_tao).toLocaleString()}
 `.trim();
 
-            const ticketKey = ticket.txn_ref || index;
+                    const ticketKey = ticket.txn_ref || index;
 
-            return (
-              <div
-                key={ticketKey}
-                ref={(el) => {
-                  if (ticketKey) ticketRefs.current[ticketKey] = el;
-                }}
-                className={`ticket-item-card ${ticket.trang_thai.toLowerCase()} ${
-                  isExpired ? "expired-style" : ""
-                }`}
-              >
-                <div className="ticket-header">
-                  <h3>{ticket.loai_ve}</h3>
-                  <span className="status-label">
-                    {isExpired ? "Expired" : ticket.trang_thai}
-                  </span>
-                </div>
+                    return (
+                      <div
+                        key={ticketKey}
+                        ref={(el) => {
+                          if (ticketKey) ticketRefs.current[ticketKey] = el;
+                        }}
+                        className={`ticket-item-card ${ticket.trang_thai.toLowerCase()} ${
+                          isExpired ? "expired-style" : ""
+                        }`}
+                      >
+                        <div className="ticket-header">
+                          <h3>{ticket.loai_ve}</h3>
+                          <span className="status-label">
+                            {isExpired ? "Expired" : ticket.trang_thai}
+                          </span>
+                        </div>
 
-                <div
-                  className="ticket-body"
-                  style={{ display: "flex", gap: "20px" }}
-                >
-                  <div style={{ flex: 1 }}>
-                    <p><b>Full Name:</b> {ticket.hoten}</p>
-                    <p><b>Email:</b> {ticket.email}</p>
-                    <p><b>Phone:</b> {ticket.sdt}</p>
-                    <p><b>Address:</b> {ticket.diachi}</p>
+                        <div className="ticket-body" style={{ display: "flex", gap: "20px" }}>
+                          <div style={{ flex: 1 }}>
+                            <p><b>Full Name:</b> {ticket.hoten}</p>
+                            <p><b>Email:</b> {ticket.email}</p>
+                            <p><b>Phone:</b> {ticket.sdt}</p>
+                            <p><b>Address:</b> {ticket.diachi}</p>
 
-                    <hr />
+                            <hr />
 
-                    <p><b>Transaction Ref:</b> {ticket.txn_ref}</p>
-                    <p><b>VNPAY ID:</b> {ticket.ma_gd_vnpay}</p>
-                    <p><b>Bank:</b> {ticket.ma_ngan_hang}</p>
-                    <p><b>Location:</b> {ticket.diadiem}</p>
-                    <p><b>Usage Date:</b> {usageDate.toLocaleDateString()}</p>
-                    <p><b>Quantity:</b> {ticket.soluong_ve} tickets | {ticket.soluong_suatan} meals</p>
+                            <p><b>Transaction Ref:</b> {ticket.txn_ref}</p>
+                            <p><b>VNPAY ID:</b> {ticket.ma_gd_vnpay}</p>
+                            <p><b>Bank:</b> {ticket.ma_ngan_hang}</p>
+                            <p><b>Location:</b> {ticket.diadiem}</p>
+                            <p><b>Usage Date:</b> {usageDate.toLocaleDateString()}</p>
+                            <p>
+                              <b>Quantity:</b> {ticket.soluong_ve} tickets |{" "}
+                              {ticket.soluong_suatan} meals
+                            </p>
 
-                    <hr />
+                            <hr />
 
-                    <p className="total-price">
-                      <b>Total:</b> {Number(ticket.tong_tien).toLocaleString()} VND
-                    </p>
-                  </div>
+                            <p className="total-price">
+                              <b>Total:</b> {Number(ticket.tong_tien).toLocaleString()} VND
+                            </p>
+                          </div>
 
-                  <div style={{ textAlign: "center" }}>
-                    <QRCodeCanvas
-                      value={qrValue}
-                      size={500}          
-                      level="H"
-                      includeMargin={true}  
-                      style={{
-                        imageRendering: "pixelated",
-                      }}
-                    />
-                    <p className="scan-text">Scan to check-in</p>
-                  </div>
-                </div>
+                          <div style={{ textAlign: "center" }}>
+                            <QRCodeCanvas
+                              value={qrValue}
+                              size={180}
+                              level="H"
+                              includeMargin={true}
+                              style={{ imageRendering: "pixelated" }}
+                            />
+                            <p className="scan-text">Scan to check-in</p>
+                          </div>
+                        </div>
 
-                <div style={{ marginTop: "10px" }}>
-                  <button
-                    className="download-btn"
-                    onClick={async () => {
-                      const element = ticketRefs.current[ticketKey];
-                      if (!element) {
-                        alert("Download failed: ticket not found");
-                        return;
-                      }
+                        <div style={{ marginTop: "10px" }}>
+                          <button
+                            className="download-btn"
+                            onClick={async (e) => {
+                              e.preventDefault();
 
-                      try {
-                        const downloadBtn = element.querySelector('.download-btn');
-                        if (downloadBtn) downloadBtn.style.visibility = 'hidden';
+                              const element = ticketRefs.current[ticketKey];
+                              if (!element) return;
 
-                        const canvas = await html2canvas(element, {
-                          useCORS: true,
-                          scale: 5, 
-                          backgroundColor: "#ffffff",
-                        });
+                              try {
+                                const downloadBtn = element.querySelector(".download-btn");
+                                if (downloadBtn) downloadBtn.style.opacity = "0";
 
-                        if (downloadBtn) downloadBtn.style.visibility = 'visible';
+                                await new Promise((resolve) => setTimeout(resolve, 500));
 
-                        const image = canvas.toDataURL("image/png", 1.0);
+                                const canvas = await html2canvas(element, {
+                                  useCORS: true,
+                                  allowTaint: true,
+                                  scale: 2,
+                                  backgroundColor: "#ffffff",
+                                  logging: false,
+                                  width: element.offsetWidth,
+                                  height: element.offsetHeight,
+                                  scrollX: -window.scrollX,
+                                  scrollY: -window.scrollY,
+                                  windowWidth: document.documentElement.offsetWidth,
+                                  windowHeight: document.documentElement.offsetHeight,
+                                });
 
-                        const link = document.createElement("a");
-                        link.href = image;
-                        link.download = `ticket-${ticketKey}.png`;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                      } catch (err) {
-                        console.error(err);
-                        alert("Download failed");
-                      }
-                    }}
-                  >
-                    Download Ticket
-                  </button>
-                </div>
+                                if (downloadBtn) downloadBtn.style.opacity = "1";
+
+                                const image = canvas.toDataURL("image/png", 1.0);
+                                const link = document.createElement("a");
+                                link.href = image;
+                                link.download = `ticket-${ticketKey}.png`;
+                                link.click();
+                              } catch (err) {
+                                console.error("Lỗi tải vé:", err);
+                              }
+                            }}
+                          >
+                            Download Ticket
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  });
+                })()}
               </div>
-            );
-          });
-        })()}
-      </div>
-    </div>
-  </>
-)}
+            </div>
+          </>
+        )}
+
         {activeTab === "shop" && (
           <>
             <div className="profile-tabs sub-tabs">
@@ -553,42 +511,17 @@ Created At: ${new Date(ticket.ngay_tao).toLocaleString()}
 
             {shopTab === "orders" && (
               <div className="profile-tabs sub-tabs">
-                <button
-                  className={orderStatusTab === "To Confirm" ? "tab active" : "tab"}
-                  onClick={() => setOrderStatusTab("To Confirm")}
-                >
-                  To Confirm
-                </button>
-                <button
-                  className={orderStatusTab === "To Ship" ? "tab active" : "tab"}
-                  onClick={() => setOrderStatusTab("To Ship")}
-                >
-                  To Ship
-                </button>
-                <button
-                  className={orderStatusTab === "Shipping" ? "tab active" : "tab"}
-                  onClick={() => setOrderStatusTab("Shipping")}
-                >
-                  Shipping
-                </button>
-                <button
-                  className={orderStatusTab === "Delivered" ? "tab active" : "tab"}
-                  onClick={() => setOrderStatusTab("Delivered")}
-                >
-                  Delivered
-                </button>
-                <button
-                  className={orderStatusTab === "Returned" ? "tab active" : "tab"}
-                  onClick={() => setOrderStatusTab("Returned")}
-                >
-                  Returned
-                </button>
-                <button
-                  className={orderStatusTab === "Cancelled" ? "tab active" : "tab"}
-                  onClick={() => setOrderStatusTab("Cancelled")}
-                >
-                  Cancelled
-                </button>
+                {["To Confirm", "To Ship", "Shipping", "Delivered", "Returned", "Cancelled"].map(
+                  (status) => (
+                    <button
+                      key={status}
+                      className={orderStatusTab === status ? "tab active" : "tab"}
+                      onClick={() => setOrderStatusTab(status)}
+                    >
+                      {status}
+                    </button>
+                  )
+                )}
               </div>
             )}
 
@@ -597,20 +530,14 @@ Created At: ${new Date(ticket.ngay_tao).toLocaleString()}
                 {shopTab === "cart" && (
                   <div className="cart-container-profile">
                     {cartItems.length === 0 ? (
-                      <p className="no-data-msg">
-                        Your shopping cart is empty.
-                      </p>
+                      <p className="no-data-msg">Your shopping cart is empty.</p>
                     ) : (
                       <>
                         <div className="cart-items-list">
                           {cartItems.map((item) => {
                             const subtotal = item.gia * item.soluong;
-
                             return (
-                              <div
-                                key={item.cart_id}
-                                className="cart-item-card"
-                              >
+                              <div key={item.cart_id} className="cart-item-card">
                                 <img
                                   src={item.anh}
                                   alt={item.ten_sanpham}
@@ -618,18 +545,11 @@ Created At: ${new Date(ticket.ngay_tao).toLocaleString()}
                                 />
 
                                 <div className="cart-product-info">
-                                  <h3 className="product-name">
-                                    {item.ten_sanpham}
-                                  </h3>
-
-                                  <p className="product-category">
-                                    Category: {item.loai}
-                                  </p>
-
+                                  <h3 className="product-name">{item.ten_sanpham}</h3>
+                                  <p className="product-category">Category: {item.loai}</p>
                                   <p className="product-quantity">
                                     Quantity: <b>{item.soluong}</b>
                                   </p>
-
                                   <div className="product-price">
                                     {item.gia.toLocaleString("vi-VN")} VND
                                   </div>
@@ -637,16 +557,12 @@ Created At: ${new Date(ticket.ngay_tao).toLocaleString()}
 
                                 <div className="cart-product-total">
                                   <span>Subtotal</span>
-                                  <b>
-                                    {subtotal.toLocaleString("vi-VN")} VND
-                                  </b>
+                                  <b>{subtotal.toLocaleString("vi-VN")} VND</b>
                                 </div>
 
                                 <button
                                   className="remove-cart-item"
-                                  onClick={() =>
-                                    handleDeleteCartItem(item.cart_id)
-                                  }
+                                  onClick={() => handleDeleteCartItem(item.cart_id)}
                                 >
                                   Remove
                                 </button>
@@ -660,11 +576,7 @@ Created At: ${new Date(ticket.ngay_tao).toLocaleString()}
                             <span>Total Payment</span>
                             <span className="total-amount">
                               {cartItems
-                                .reduce(
-                                  (total, item) =>
-                                    total + item.gia * item.soluong,
-                                  0
-                                )
+                                .reduce((total, item) => total + item.gia * item.soluong, 0)
                                 .toLocaleString("vi-VN")}{" "}
                               VND
                             </span>
@@ -688,73 +600,62 @@ Created At: ${new Date(ticket.ngay_tao).toLocaleString()}
 
                 {shopTab === "orders" && (
                   <div className="orders-container">
-                    {orders.filter(o => o.trangthai === orderStatusTab).length === 0 ? (
-                      <p className="no-data-msg">
-                        No orders in this status.
-                      </p>
+                    {orders.filter((o) => o.trangthai === orderStatusTab).length === 0 ? (
+                      <p className="no-data-msg">No orders in this status.</p>
                     ) : (
                       <div className="orders-list">
                         {orders
-                          .filter(o => o.trangthai === orderStatusTab)
+                          .filter((o) => o.trangthai === orderStatusTab)
                           .map((order) => (
                             <div key={order.id} className="order-card">
                               <div className="order-header">
                                 <h3>Order #{order.id}</h3>
-                                <span className="order-status">
-                                  {order.trangthai}
-                                </span>
+                                <span className="order-status">{order.trangthai}</span>
                               </div>
 
                               <div className="order-body">
+                                <img src={order.anh} alt={order.ten_sanpham} />
 
-  <img
-    src={order.anh}
-    alt={order.ten_sanpham}
-  />
+                                <div className="order-info">
+                                  <p><b>Product:</b> {order.ten_sanpham}</p>
+                                  <p><b>Category:</b> {order.loai}</p>
+                                  <p><b>Price:</b> {Number(order.gia).toLocaleString("vi-VN")} VND</p>
+                                  <p><b>Quantity:</b> {order.soluong}</p>
 
-  <div className="order-info">
+                                  <div className="order-divider"></div>
 
-    <p><b>Product:</b> {order.ten_sanpham}</p>
-    <p><b>Category:</b> {order.loai}</p>
-    <p><b>Price:</b> {Number(order.gia).toLocaleString("vi-VN")} VND</p>
-    <p><b>Quantity:</b> {order.soluong}</p>
+                                  <div className="order-total">
+                                    Total: {Number(order.tongtien).toLocaleString("vi-VN")} VND
+                                  </div>
 
-    <div className="order-divider"></div>
+                                  <div className="order-divider"></div>
 
-    <div className="order-total">
-      Total: {Number(order.tongtien).toLocaleString("vi-VN")} VND
-    </div>
+                                  <p><b>Customer:</b> {order.hoten}</p>
+                                  <p><b>Phone:</b> {order.sdt}</p>
+                                  <p><b>Address:</b> {order.diachi}</p>
 
-    <div className="order-divider"></div>
+                                  <p>
+                                    <b>Delivery Time:</b>{" "}
+                                    {order.thoigiangiaohang
+                                      ? new Date(order.thoigiangiaohang).toLocaleString()
+                                      : "Updating"}
+                                  </p>
 
-    <p><b>Customer:</b> {order.hoten}</p>
-    <p><b>Phone:</b> {order.sdt}</p>
-    <p><b>Address:</b> {order.diachi}</p>
+                                  <p>
+                                    <b>Order Date:</b>{" "}
+                                    {new Date(order.ngaytao).toLocaleString()}
+                                  </p>
 
-    <p>
-      <b>Delivery Time:</b>{" "}
-      {order.thoigiangiaohang
-        ? new Date(order.thoigiangiaohang).toLocaleString()
-        : "Updating"}
-    </p>
-
-    <p>
-      <b>Order Date:</b>{" "}
-      {new Date(order.ngaytao).toLocaleString()}
-    </p>
-
-    {order.trangthai === "To Confirm" && (
-      <button
-        className="cancel-order-btn"
-        onClick={() => handleCancelOrder(order.id)}
-      >
-        Cancel Order
-      </button>
-    )}
-
-  </div>
-
-</div>
+                                  {order.trangthai === "To Confirm" && (
+                                    <button
+                                      className="cancel-order-btn"
+                                      onClick={() => handleCancelOrder(order.id)}
+                                    >
+                                      Cancel Order
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
                             </div>
                           ))}
                       </div>
