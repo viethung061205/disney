@@ -40,7 +40,6 @@ A full-stack Disney-inspired web platform that combines movie discovery, ticket 
 
 ### 🛠️ Admin
 - Manage products
-- Manage movie information
 - Manage users
 - Manage tickets
 - Manage bookings
